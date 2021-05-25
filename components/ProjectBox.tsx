@@ -1,10 +1,10 @@
 import React, { FunctionComponent, ReactNode } from "react"
 import Link from 'next/link'
 
-type ProjectBoxProps = {
+export type ProjectBoxProps = {
   title: string
   children: ReactNode
-  link?: string
+  link?: string | ReactNode
   linkText?: string
   internalLink?: string
 }
@@ -21,13 +21,16 @@ const ProjectBox: FunctionComponent<ProjectBoxProps> = ({
     <p className='projects-box__text'>
       {children}
     </p>
-    { link && <>
+    { typeof link === "string" && <>
       <div className='readmore-a'>{
         internalLink
           ? <Link href={link}>{linkText}</Link>
           : <a href={link}>{linkText}</a>
       }</div>
-    </>}
+    </> }
+    { typeof link === "object" && <div className="readmore-a">
+      {link}
+    </div> }
   </span>
 }
 

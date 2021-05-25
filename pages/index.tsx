@@ -1,8 +1,11 @@
+import React from "react"
+
 import Head from 'next/head'
 import Image from 'next/image'
 import HeaderLinks from '../components/HeaderLinks'
 import ProjectBox from '../components/ProjectBox'
-import styles from '../styles/Home.module.css'
+import ProjectRow from "../components/ProjectRow"
+
 
 export default function Home() {
   return <div className="centraldiv">
@@ -30,42 +33,63 @@ export default function Home() {
 
         {/* personal projects */}
         <br />
-        <h3 className="title-separator">personal projects</h3>
-        <span id='projects-grid-span'>
-          <ProjectBox title="PrivacyLayer" link="https://github.com/Ichicoro/privacylayer">
-            PrivacyLayer is an app for Android 4.4+ devices that lets users <b>encrypt</b> and <b>decrypt</b> text using a <i>customizable key</i>.
-          </ProjectBox>
+        <ProjectRow title="personal projects" links={[
+          {
+            title: "PrivacyLayer",
+            link: "https://github.com/Ichicoro/privacylayer",
+            contents: <>
+              PrivacyLayer is an app for Android 4.4+ devices that lets users <b>encrypt</b> and <b>decrypt</b> text using a <i>customizable key</i>.
+            </>
+          },
+          {
+            title: "Chicor",
+            link: "https://github.com/Ichicoro/Chicor",
+            contents: <>
+              A flexible, <i>plugin-based</i>, open source Telegram bot for groups written in <b>Python</b>.
+            </>
+          },
+          {
+            title: "godot-tetris",
+            link: "https://github.com/Ichicoro/godot-tetris",
+            contents: <>
+              A Tetris remake in the <a href="https://godotengine.org">Godot game engine</a>. It is available both as a <a href="https://github.com/Ichicoro/godot-tetris/releases">native binary</a> or as an <a href="https://marte.dev/tetris">HTML5 page</a>.
+            </>
+          }
+        ]} />
 
-          <ProjectBox title="Chicor" link="https://github.com/Ichicoro/Chicor">
-            A flexible, <i>plugin-based</i>, open source Telegram bot for groups written in <b>Python</b>.
-          </ProjectBox>
-
-          <ProjectBox title="godot-tetris" link="https://github.com/Ichicoro/godot-tetris">
-            A Tetris remake in the <a href="https://godotengine.org">Godot game engine</a>. It is available both as a <a href="https://github.com/Ichicoro/godot-tetris/releases">native binary</a> or as an <a href="https://marte.dev/tetris">HTML5 page</a>.
-          </ProjectBox>
-        </span>
-
-
-        {/* solfu projects */}
         <br />
-        <h3 className="title-separator">things I've worked on @ soluzioni futura</h3>
-        <span>
-          These are all projects I've worked on at <a href="https://soluzionifutura.it">Soluzioni Futura</a>
-        </span>
-        <br /><br />
-        <span id='projects-grid-span'>
-          <ProjectBox title="LoveTheSign" link="https://lovethesign.it" linkText="Visit website...">
-            wip
-          </ProjectBox>
-
-          <ProjectBox title="HolyArt App" link="https://github.com/Ichicoro/Chicor">
-            The official mobile app for <a href="https://holyart.it">Holyart.it</a>, written in TypeScript and leveraging <a href="https://expo.io">Expo</a>.
-          </ProjectBox>
-
-          <ProjectBox title="wip" link="#">
-            wip
-          </ProjectBox>
-        </span>
+        <ProjectRow
+          title="things I've worked on @ soluzioni futura"
+          subtitle={<span>
+            These are all projects I've worked on at <a href="https://soluzionifutura.it">Soluzioni Futura</a>
+          </span>}
+          links={[
+            {
+              title: "LoveTheSign",
+              link: "https://lovethesign.it",
+              linkText: "Visit website...",
+              contents: <>
+                PrivacyLayer is an app for Android 4.4+ devices that lets users <b>encrypt</b> and <b>decrypt</b> text using a <i>customizable key</i>.
+              </>
+            },
+            {
+              title: "HolyArt App",
+              link: <>
+                <a href="https://apps.apple.com/it/app/holyart-articoli-religiosi/id1538602972">App Store</a> | <a href="https://play.google.com/store/apps/details?id=com.pulcranet.holyart">Google Play</a>
+              </>,
+              contents: <>
+                The official mobile app for <a href="https://holyart.it">Holyart.it</a>, written in TypeScript and leveraging <a href="https://expo.io">Expo</a>.
+              </>
+            },
+            {
+              title: "wip",
+              link: "#",
+              contents: <>
+                wip
+              </>
+            }
+          ]}
+        />
       </span>
     </span>
   </div>
