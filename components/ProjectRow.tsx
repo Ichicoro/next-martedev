@@ -19,7 +19,13 @@ const ProjectRow: FunctionComponent<ProjectRowProps> = ({
     </> }
     <span id='projects-grid-span'>
       {links.map((box: BoxData, idx: number, arr: BoxData[]) => {
-        return <ProjectBox title={box.title} link={box.link} internalLink={box.internalLink} linkText={box.linkText}>
+        return <ProjectBox
+          title={box.title}
+          key={`project-box-${idx}`}
+          link={box.link}
+          internalLink={box.internalLink}
+          linkText={box.linkText}
+        >
           {box.contents}
         </ProjectBox>
       })}

@@ -115,6 +115,16 @@ a:hover {
   color: var(--link-clicked-color);
 }
 
+#globecanvas {
+  position: fixed;
+  bottom: -300px;
+  right: -200px;
+  width: 850px;
+  height: 850px;
+  z-index: -999;
+  opacity: 0.085
+}
+
 
 /* MEDIA QUERIES */
 
