@@ -5,11 +5,11 @@ type BoxData = Omit<ProjectBoxProps, "children"> & { contents: ReactNode }
 type ProjectRowProps = {
   title?: string
   subtitle?: ReactNode
-  links: BoxData[]
+  data: BoxData[]
 }
 
 const ProjectRow: FunctionComponent<ProjectRowProps> = ({
-  title, subtitle, links
+  title, subtitle, data
 }: ProjectRowProps) => {
   return <>
     { title && <h3 className="title-separator">{title}</h3> }
@@ -18,7 +18,7 @@ const ProjectRow: FunctionComponent<ProjectRowProps> = ({
       <br /><br />
     </> }
     <span id='projects-grid-span'>
-      {links.map((box: BoxData, idx: number, arr: BoxData[]) => {
+      {data.map((box: BoxData, idx: number, arr: BoxData[]) => {
         return <ProjectBox
           title={box.title}
           key={`project-box-${idx}`}

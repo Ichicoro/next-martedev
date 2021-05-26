@@ -7,6 +7,7 @@ import HeaderLinks from '../components/HeaderLinks'
 import ProjectBox from '../components/ProjectBox'
 import ProjectRow from "../components/ProjectRow"
 import { initializeIcosahedron } from "../helpers/animation"
+import Link from "../components/Link"
 
 export default function Index() {
   useEffect(() => {
@@ -26,27 +27,35 @@ export default function Index() {
         <span id="spanbox">
           <h1 className="centralh1">Marte Montipo'</h1>
 
-          <HeaderLinks links={[
-            { text: "github", link: "https://github.com/ichicoro" },
+          {/* <HeaderLinks links={[
+            { text: "github", link: "/", internal: true },
             { text: "twitter", link: "https://twitter.com/_ichicoro" },
             { text: "telegram", link: "https://t.me/Ichicoro" },
             { text: "email", link: "mailto:me@marte.dev" }
-          ]} />
+          ]} /> */}
 
           <span id='projects-grid-span'>
-            <ProjectBox title="About me">
-              I'm a <span id="my-age">21</span> years old developer from Reggio Emilia, Italy. I'm currently employed at <a href="https://soluzionifutura.it">Soluzioni Futura</a> as a full-stack web developer. <br /><br />
+            <ProjectBox title="About me" link={<>
+              <a href="https://github.com/ichicoro">github</a>
+              &nbsp;|&nbsp;
+              <a href="https://twitter.com/_ichicoro">twitter</a>
+              &nbsp;|&nbsp;
+              <a href="https://t.me/Ichicoro">telegram</a>
+              &nbsp;|&nbsp;
+              <a href="mailto:me@marte.dev">email</a>
+            </>}>
+              I'm a <span id="my-age">21</span> years old developer from Reggio Emilia, Italy. I'm currently employed at <Link href="https://soluzionifutura.it">Soluzioni Futura</Link> as a full-stack web developer. <br /><br />
 
-              On my spare time, I love creating Unity and Godot games, porting <a href="https://github.com/FWGS/xash3d-fwgs">Xash3D</a> (a Half-Life engine rewritten from scratch) to platforms like iOS and the Wii and working on other weird projects :)<br /><br />
+              On my spare time, I love creating Unity and Godot games, porting <Link href="https://github.com/FWGS/xash3d-fwgs">Xash3D</Link> (a Half-Life engine rewritten from scratch) to platforms like iOS and the Wii and working on other weird projects :)<br /><br />
 
-              I'm also an avid CS:GO player. You can find my Steam profile <a href="https://steamcommunity.com/id/ichicoro">here</a>.
+              I'm also an avid CS:GO player. You can find my Steam profile <Link href="https://steamcommunity.com/id/ichicoro">here</Link>.
             </ProjectBox>
           </span>
 
 
           {/* personal projects */}
           <br />
-          <ProjectRow title="personal projects" links={[
+          <ProjectRow title="personal projects" data={[
             {
               title: "PrivacyLayer",
               link: "https://github.com/Ichicoro/privacylayer",
@@ -74,9 +83,9 @@ export default function Index() {
           <ProjectRow
             title="things I've worked on @ soluzioni futura"
             subtitle={<span>
-              These are all projects I've worked on at <a href="https://soluzionifutura.it">Soluzioni Futura</a>
+              These are all projects I've worked on at <Link href="https://soluzionifutura.it">Soluzioni Futura</Link>
             </span>}
-            links={[
+            data={[
               {
                 title: "LoveTheSign",
                 link: "https://lovethesign.it",
@@ -88,10 +97,12 @@ export default function Index() {
               {
                 title: "HolyArt App",
                 link: <>
-                  <a href="https://apps.apple.com/it/app/holyart-articoli-religiosi/id1538602972">App Store</a> | <a href="https://play.google.com/store/apps/details?id=com.pulcranet.holyart">Google Play</a>
+                  <Link href="https://apps.apple.com/it/app/holyart-articoli-religiosi/id1538602972">App Store</Link>
+                  &nbsp;|&nbsp;
+                  <Link href="https://play.google.com/store/apps/details?id=com.pulcranet.holyart">Google Play</Link>
                 </>,
                 contents: <>
-                  The official mobile app for <a href="https://holyart.it">Holyart.it</a>, written in TypeScript and leveraging <a href="https://expo.io">Expo</a>.
+                  The official mobile app for <Link href="https://holyart.it">Holyart.it</Link>, written in TypeScript and leveraging <Link href="https://expo.io">Expo</Link>.
                 </>
               }
             ]}
