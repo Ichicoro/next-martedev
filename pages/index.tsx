@@ -91,7 +91,7 @@ export default function Index() {
                 link: "https://lovethesign.it",
                 linkText: "Visit website...",
                 contents: <>
-                  PrivacyLayer is an app for Android 4.4+ devices that lets users <b>encrypt</b> and <b>decrypt</b> text using a <i>customizable key</i>.
+                  An online boutique that sells exclusive home design products.
                 </>
               },
               {
