@@ -27,7 +27,7 @@ export default function Index() {
         <span id="spanbox">
           <h1 className="centralh1">Marte Montipo'</h1>
 
-          <span id='projects-grid-span'>
+          <span className='projects-grid-span'>
             <ProjectBox title="About me" links={[
               { link: "https://github.com/ichicoro", text: "github" },
               { link: "https://twitter.com/_ichicoro", text: "twitter" },

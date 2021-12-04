@@ -17,7 +17,7 @@ const ProjectRow: FunctionComponent<ProjectRowProps> = ({
       {subtitle}
       <br /><br />
     </> }
-    <span id='projects-grid-span'>
+    <span className='projects-grid-span'>
       {data.map((box: BoxData, idx: number, arr: BoxData[]) => {
         return <ProjectBox
           title={box.title}

@@ -21,8 +21,8 @@ const ProjectBox: FunctionComponent<ProjectBoxProps> = ({
     <div className="readmore-a">
       {links?.map((link, idx, arr) => <>
         {link.internal
-          ? <Link href={link.link}>{link.text}</Link>
-          : <a href={link.link}>{link.text}</a>
+          ? <Link key={`${link.link}+${idx}`} href={link.link}>{link.text}</Link>
+          : <a key={`${link.link}+${idx}`} href={link.link}>{link.text}</a>
         }
         {idx !== arr.length - 1 && <>&nbsp;|&nbsp;</>}
       </>)}
