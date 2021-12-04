@@ -22,9 +22,7 @@ const ProjectRow: FunctionComponent<ProjectRowProps> = ({
         return <ProjectBox
           title={box.title}
           key={`project-box-${idx}`}
-          link={box.link}
-          internalLink={box.internalLink}
-          linkText={box.linkText}
+          links={box.links}
         >
           {box.contents}
         </ProjectBox>

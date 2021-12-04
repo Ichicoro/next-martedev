@@ -1,27 +1,33 @@
 import React, { FunctionComponent, ReactNode } from "react"
 import Link from 'next/link'
+import { LinkData } from "../types/LinkData"
 
 export type ProjectBoxProps = {
   title: string
   children: ReactNode
-  link?: string | ReactNode
-  linkText?: string
-  internalLink?: string
+  links?: LinkData[]
 }
 
 const ProjectBox: FunctionComponent<ProjectBoxProps> = ({
   title,
   children,
-  link,
-  linkText = "Read more...",
-  internalLink
+  links
 }: ProjectBoxProps) => {
   return <span className='projects-box'>
     <h2 className='projects-box__title'>{title}</h2>
     <p className='projects-box__text'>
       {children}
     </p>
-    { typeof link === "string" && <>
+    <div className="readmore-a">
+      {links?.map((link, idx, arr) => <>
+        {link.internal
+          ? <Link href={link.link}>{link.text}</Link>
+          : <a href={link.link}>{link.text}</a>
+        }
+        {idx !== arr.length - 1 && <>&nbsp;|&nbsp;</>}
+      </>)}
+    </div>
+    {/* { typeof link === "string" && <>
       <div className='readmore-a'>{
         internalLink
           ? <Link href={link}>{linkText}</Link>
@@ -30,7 +36,7 @@ const ProjectBox: FunctionComponent<ProjectBoxProps> = ({
     </> }
     { typeof link === "object" && <div className="readmore-a">
       {link}
-    </div> }
+    </div> } */}
   </span>
 }
 

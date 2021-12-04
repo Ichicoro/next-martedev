@@ -1,11 +1,7 @@
 import Link from "../components/Link"
 import React, { FunctionComponent } from "react"
+import { LinkData } from "../types/LinkData"
 
-type LinkData = {
-  text: string
-  link: string
-  internal?: boolean
-}
 type HeaderLinksProps = {
   links: LinkData[]
 }
