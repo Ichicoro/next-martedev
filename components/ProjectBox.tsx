@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from "react"
+ import React, { CSSProperties, FunctionComponent, ReactNode } from "react"
 import Link from 'next/link'
 import { LinkData } from "../types/LinkData"
 
@@ -18,7 +18,7 @@ const ProjectBox: FunctionComponent<ProjectBoxProps> = ({
     <p className='projects-box__text'>
       {children}
     </p>
-    <div className="readmore-a">
+    {links && links?.length > 0 && <div className="readmore-a">
       {links?.map((link, idx, arr) => <>
         {link.internal
           ? <Link key={`${link.link}+${idx}`} href={link.link}>{link.text}</Link>
@@ -26,7 +26,7 @@ const ProjectBox: FunctionComponent<ProjectBoxProps> = ({
         }
         {idx !== arr.length - 1 && <>&nbsp;|&nbsp;</>}
       </>)}
-    </div>
+    </div> }
     {/* { typeof link === "string" && <>
       <div className='readmore-a'>{
         internalLink

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import * as THREE from "three"
 
 import Head from 'next/head'
@@ -13,6 +13,12 @@ export default function Index() {
   useEffect(() => {
     initializeIcosahedron()
   }, [])
+
+  const _calculateAge = (birthday: Date) => {
+    const ageDifMs = Date.now() - birthday.getTime()
+    const ageDate = new Date(ageDifMs)
+    return Math.abs(ageDate.getUTCFullYear() - 1970)
+  }
 
   return <>
     <Head>
@@ -34,11 +40,12 @@ export default function Index() {
               { link: "https://t.me/Ichicoro", text: "telegram" },
               { link: "mailto:me@marte.dev", text: "email" }
             ]}>
-              I'm a <span id="my-age">21</span> years old developer from Reggio Emilia, Italy. I'm currently employed at <Link href="https://soluzionifutura.it">Soluzioni Futura</Link> as a full-stack web developer. <br /><br />
+              Hello! I'm Marte, a {_calculateAge(new Date(1999,10,20)) || 22} years old developer from Reggio Emilia, Italy. I'm currently employed at <Link href="https://soluzionifutura.it">Soluzioni Futura</Link> as a full-stack web developer. <br /><br />
 
               On my spare time, I love creating Unity and Godot games, porting <Link href="https://github.com/FWGS/xash3d-fwgs">Xash3D</Link> (a Half-Life engine rewritten from scratch) to platforms like iOS and the Wii and working on other weird projects :)<br /><br />
 
               I'm also an avid CS:GO player. You can find my Steam profile <Link href="https://steamcommunity.com/id/ichicoro">here</Link>.
+
             </ProjectBox>
           </span>
 
@@ -72,6 +79,7 @@ export default function Index() {
           <br />
           <ProjectRow
             title="things I've worked on @ soluzioni futura"
+            col={6}
             subtitle={<span>
               These are all projects I've worked on at <Link href="https://soluzionifutura.it">Soluzioni Futura</Link>
             </span>}
