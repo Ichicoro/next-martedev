@@ -44,8 +44,7 @@ export default function Index() {
 
               On my spare time, I love creating Unity and Godot games, porting <Link href="https://github.com/FWGS/xash3d-fwgs">Xash3D</Link> (a Half-Life engine rewritten from scratch) to platforms like iOS and the Wii and working on other weird projects :)<br /><br />
 
-              I'm also an avid CS:GO player. You can find my Steam profile <Link href="https://steamcommunity.com/id/ichicoro">here</Link>.
-
+              I'm also an avid CS:GO and Team Fortress 2 player.
             </ProjectBox>
           </span>
 

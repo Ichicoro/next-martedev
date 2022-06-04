@@ -22,7 +22,7 @@ const ProjectRow: FunctionComponent<ProjectRowProps> = ({
     <span className='projects-grid-span'>
       <Row>
         {data.map((box: BoxData, idx: number, arr: BoxData[]) => {
-          return <Col md={col} className={idx !== arr.length - 1 ? "projects-box--marginBottom" : ""}>
+          return <Col md={col}>
             <ProjectBox
               title={box.title}
               key={`project-box-${idx}`}

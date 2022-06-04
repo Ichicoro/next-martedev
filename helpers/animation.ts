@@ -26,6 +26,12 @@ export const initializeIcosahedron = (): void => {
 
   const geo = new THREE.IcosahedronGeometry(2.1, 2);
 
+  // var wfGeo = new THREE.EdgesGeometry(geo); // or WireframeGeometry( geometry )
+
+  // var wfMat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 20 });
+
+  // var wireframe = new THREE.LineSegments(wfGeo, wfMat);
+
   const material = new THREE.MeshBasicMaterial({
     color: 0xaaaaaa,
     wireframe: true,
