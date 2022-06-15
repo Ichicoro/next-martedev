@@ -1,0 +1,513 @@
+### CALCOLO INDIRIZZI IP
+
+# ipcalc
+
+ipcalc <ADDRESS1> - <ADDRESS2>  deaggregate address range
+
+ipcalc <ADDRESS>/<NETMASK> --s a b c
+                        split network to subnets
+				where a b c fits in.
+
+0		1		
+2		2		
+6		3
+14		4
+30		5
+62		6
+126		7
+254		8
+
+510		9
+1022		10
+2046		11
+4094		12
+8190		13
+16382		14
+32766		15
+65534		16
+
+131070	17
+262142	18
+
+1		1
+2		10		
+4		100		
+8		1000
+16		10000
+32		100000
+64		1000000
+128		10000000
+
+256		1 00000000
+512		10 00000000
+1024		100 00000000
+2048		1000 00000000
+4096		10000 00000000
+8192		100000 00000000
+16384		1000000 00000000
+32768		10000000 00000000
+65536		1 00000000 00000000
+
+
+
+
+### TMUX
+
+Toggle last active pane
+Ctrl + b ;
+
+Split pane with horizontal layout
+Ctrl + b %
+
+Split pane with vertical layout
+Ctrl + b "
+
+Move the current pane left
+Ctrl + b {
+
+Move the current pane right
+Ctrl + b }
+
+Switch to pane to the direction
+Ctrl + b {arrow up}
+Ctrl + b {arrow down}
+Ctrl + b {arrow right}
+Ctrl + b {arrow left}
+
+
+
+
+
+
+### RESTART NETWORKING
+
+/etc/init.d/networking restart
+
+# turn off iface
+ifconfig eth0 down
+
+# fix "RTNETLINK answers: File exists"
+ip addr flush eth0
+
+
+
+### /etc/network/interfaces
+
+auto eth0
+iface eth0 inet static
+	address 192.168.1.1
+
+:wq
+
+ifup eth0 
+
+
+
+
+
+
+
+
+### IP MULTIPLI
+
+ip addr add dev eth0 192.168.0.1/24
+# aggiunge un ip a eth0 in modo temporaneo
+
+ip addr show dev eth0
+# mostra tutti gli ip di eth0
+
+# NB: ifconfig e interfaces non supportano ip multipli
+# NB: la soluzione è usare alias come segue
+
+ifconfig eth0:0 192.168.0.1/24
+ifconfig eth0:1 192.168.1.1/24
+
+# oppure su file /etc/network/interfaces
+
+auto eth0:0 eth0:1
+
+iface eth0:0 inet static
+	address 192.168.0.1
+	netmask 255.255.255.0
+
+iface eth0:1 inet static
+	address 192.168.1.1
+	netmask 255.255.255.0
+
+
+
+
+
+
+
+
+
+
+### BRIDGE
+
+brctl addbr nomebrigde
+
+brctl addif nomebridge interfaccia
+
+brctl show nomebridge
+
+brctl showmacs nomebridge
+
+iface br0 inet static
+    bridge_ports eth0 eth1
+    address 0.0.0.0
+
+ifconfig nomebridge up // ifup nomebridge 
+
+brctl delbr nomebridge // ifdown nomebridge 
+
+
+
+
+
+
+
+
+
+### IP FORWARDING
+# funzionalità di accettare pacchetti IP con destinazioni
+# differenti e inoltrarli verso un destinatario
+
+sysctl net.ipv4.ip_forward
+# ritorna 0 se è disabilitato, 1 se abilitato
+
+sysctl net.ipv4.ip_forward=1
+# abilita ip forwarding temporaneamente se usato come comando
+
+net.ipv4.ip_forward=1
+# abilita ip forwarding in modo permanente se inserito nel 
+# file /etc/sysctl.conf
+# NB: non viene applicato subito, usare: 
+sysctl -p /etc/sysctl.conf
+# legge le modifiche al file di configurazione
+
+
+## Routing verso un host:
+route add -host <target> gw <gwaddr>
+
+## Routing verso una subnet:
+route add -net <target> [netmask x.x.x.x] gw <gwaddr>
+
+## Impostazione del default gateway:
+route add default gw <gwaddr>
+
+## rendere il tutto permanente con post-up
+# /etc/network/interfaces
+auto eth0
+iface eth0 inet static
+	.......
+	gateway <gateway>
+	post-up route add -net <target> [netmask x.x.x.x] gw <gwaddr>
+	post-up ....
+	post-up ....
+
+
+### TABELLA DI ROUTING
+
+# per visualizzare la tabella di routing
+route -n
+# oppure 
+ip route show
+
+
+
+
+
+
+
+### debug routing
+
+traceroute --icmp <host>
+# segna tutti gli step che il pacchetto compie
+
+
+
+
+
+# VLAN
+Creazione dell'interfaccia VLAN
+ip link add link <physif> <virtif> type vlan id <N>
+
+Rimozione
+ip link del <virtif>
+
+permanente
+auto <physif>.<N>
+iface <physif>.<N> inet static
+	address <ip_address>
+	netmask <netmask>
+	gateway <ip_addr_gateway>
+
+oppure con ip
+ip link add link <iface> <virtf> type vlan id <id>
+diventa permanente se messa in un "post-up"
+
+visualizzare info
+grep VID /proc/net/vlan/<virtif>
+grep VID /proc/net/vlan/eth0.10
+
+
+## COMANDI VDE switch, da settare nel file di config
+#port
+port/setvlan port_number vlan_number
+NB: differenza fra port/setvlan e vlan/addport? Impostano rispettivamente VLAN untagged e tagged
+#vlan
+vlan/create vlan_number
+vlan/addport vlan_number port_number
+vlan/print
+#hash
+
+esempio:
+vlan/create 10
+vlan/create 20
+# access link to hosts
+port/setvlan 1 10
+port/setvlan 2 20
+# trunk to other switch/router
+vlan/addport 10 3
+vlan/addport 20 3
+
+
+
+
+
+### NAT
+### IPtables
+
+Sono presenti tre tabelle:
+● Filter: per operazioni di filtraggio.
+● Mangle: per le funzionalità di marking dei pacchetti e per effettuare
+modifiche ai campi TOS e TTL.
+● Nat: per le funzioni di Masquerading, Port Forwarding e Transparent
+Proxy.
+
+
+# Visualizzare le regole della tabella nat
+iptables -t nat [-v] [-n] -L [<chain>] [--line-numbers]
+iptables -t nat -L
+iptables -t nat -L POSTROUTING
+
+La tabella nat prevede tre chain di default:
+PREROUTING:
+– DNAT pacchetti provenienti dall'esterno
+OUTPUT: 
+– DNAT for altering locally-generated packets before routing
+	(probably useless)
+POSTROUTING:
+– SNAT su tutti i pacchetti
+
+# Eliminare regole dalla tabella nat
+iptables -t nat -D <chain> <rule_number>
+iptables -t nat -D POSTROUTING 1
+
+
+# Aggiungere una regola di SNAT:
+iptables -t nat -A POSTROUTING -o <output_iface> -j <action>
+iptables -t nat -A POSTROUTING -o eth1 -j SNAT --to-source 1.2.3.4
+iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE 	# set output_iface's ip as source
+iptables -t nat -A POSTROUTING -o eth1 -s 192.168.1.1 -j SNAT --to-source 1.2.3.4
+
+Nel caso di SNAT, ad esempio, IPtables ritrasforma automaticamente
+anche gli indirizzi IP di destinazione dei pacchetti di risposta a pacchetti
+su cui precedentemente era stato effettuato SNAT!
+
+
+# Aggiungere una regola di DNAT
+iptables -t nat -A PREROUTING -j DNAT -i <iface> -d <public_ip> --to-destination <private_ip>
+iptables -t nat -A PREROUTING -j DNAT -i eth1 -d 1.2.3.4 --to-destination 192.168.1.30
+
+# port forwarding DNAT
+iptables -t nat -A PREROUTING -j DNAT -i <if> -d <public_ip> -p <protocol> --dport <port> --to-destination <private_ip:port>
+iptables -t nat -A PREROUTING -j DNAT -i eth1 -d 1.2.3.4 -p tcp --destination-port 8000 --to-destination 192.168.1.30:80
+
+
+## Rendere permanenti le modifiche di IPtables
+
+# post-up su /etc/network/interfaces (not recommended)
+
+# iptables-persistent salvando sul file /etc/iptables/rules.v4
+
+iptables-save > /etc/iptables/rules.v4
+# salva in un file la configurazione attuale
+
+iptables-restore < /etc/iptables/rules.v4
+# applica quello che viene scritto in rules.v4
+# in teoria lo fa in automatico al boot
+
+
+
+
+
+
+
+### SIMULARE INTERNET CON SWITCH
+
+auto eth1
+iface eth1 inet static
+ address 1.1.1.1
+ post-up route add -host 2.2.2.2 dev eth1
+ post-up route add -host 3.3.3.3 dev eth1
+ post-up route add -host 4.4.4.4 dev eth1
+
+
+
+
+
+
+### NETCAT
+
+# listen on tcp port
+nc -lp 8000
+
+# send stdin as tcp client to ip/port
+nc 192.168.1.1 8000
+
+# listen on udp port
+nc -lup 8000
+
+# send stdin as udp client to ip/port
+nc -u 192.168.1.1 8000
+
+-k  --> continue listening after disconnection
+
+### processi in ascolto
+ss -nupl
+
+## allow ssh
+ufw allow ssh
+
+
+
+
+### DHCP Client
+
+# runtime start and release
+dhclient -i eth0
+dhclient -r
+
+# permanent
+# /etc/network/interfaces
+auto eth0
+iface eth0 inet dhcp
+
+
+
+
+
+
+
+### DHCP Server
+# start service
+/etc/init.d/isc-dhcp-server start
+# NB: In questo caso l'interfaccia su cui si mette in ascolto il server è
+# definita nel file /etc/default/isc-dhcp-server
+# Il resto delle opzioni sono in /etc/dhcp/dhcpd.conf, inclusi
+# numerosi esempi di configurazione, tipo:
+
+# Setup della sottorete:
+subnet 192.168.0.0 netmask 255.255.255.0 {
+range 192.168.0.100 192.168.0.253;
+option subnet-mask 255.255.255.0;
+option routers 192.168.0.254;
+}
+# Binding manuale tramite MAC address
+host mynotebook {
+hardware ethernet AA:AA:AA:AA:AA:AA;
+fixed-address 192.168.0.10;
+}
+
+# NB: questo è un elenco di possibili opzioni da usare nella configurazione sopra:
+● option subnet-mask: netmask del default gateway
+● option broadcast-address
+● option routers : IP del default gateway
+● option domain-name: definizione del nome del domain
+● option domain-name-servers: definizione del server DNS
+● option static-routes: definizione di route statiche (NON CIDR)
+● option smtp-server: definizione dei mail-server
+● option ntp-servers:, definizione dei time server
+● option netbios-name-servers: definizione dei WINS-Server
+● default-lease-time: validità standard di un indirizzo IP
+● max-lease-time:, tempo massimo di validità di un indirizzo IP assegnato.
+
+
+# routing dhcp
+# Nel caso di dhcpd/isc-dhcp-server, è necessario definire:
+option rfc3442-classless-static-routes code 121 = array of unsigned integer 8;
+# L'opzione andrà inserita con la seguente sintassi:
+option rfc3442-classless-static-routes <nbits>, <netid>, <gateway>;
+# Ad esempio, per configurare una regola del tipo
+# route add -net 192.168.0.0/24 gw 192.168.1.253
+# è necesario usare la seguente opzione:
+option rfc3442-classless-static-routes 24, 192,168,0, 192,168,1,253;
+# per aggiungere un gateway default si usa 0 come <nbits> e non si inserisce <netid>, seguono altri gw
+option rfc3442-classless-static-routes     0, 192,168,1,254,     24, 192,168,0, 192,168,1,253;
+
+
+# DHCP relay agent (inoltra le richieste dhcp fuori dal dominio di broadcast del server dhcp)
+# da impostare su un router di una subnet, in modo che inoltri correttamente le comunicazioni dhcp
+# provenienti dalla subnet
+#service
+isc-dhcp-relay
+service isc-dhcp-relay start
+service isc-dhcp-relay stop
+#command
+dhcrelay
+#file config
+/etc/default/isc-dhcp-relay
+
+
+
+# routing dhcp compatibile con client microsoft
+option ms-classless-static-routes code 249 = \
+array of unsigned integer 8;
+
+
+## runtime
+dhcpd eth0
+
+# edit settings 
+vim /etc/dhcp/dhclient.conf
+
+send dhcp-lease-time 3600;
+request subnet-mask, broadcast-address, time-
+offset, routers,domain-name, domain-name-
+servers, domain-search, host-name,;
+require subnet-mask, domain-name-
+servers,host-name;
+timeout 60;
+retry 60;
+
+
+
+
+
+
+
+
+
+
+
+# emergenza se si spacca tutto [debug momento]
+
+- controllare /etc/network/interfaces
+  - nomi interfacce corrette? se sono tagged serve eth<numero>.<vlan>, se sono alias serve eth<numero>:<alias>
+  - controllare di non aver invertito le varie eth0 eth1 ecc
+  - controllare gateway, se la direttiva semplice da problemi magari meglio usare post-up
+    - nello specifico, se si usano alias interfaces, è importante mettere su TUTTE le interfacce le regole e bisogna usare la dicitura eth<numero>:<alias>
+  - controllare i cavi, specialmente "se sono crossover o no" :)
+  - controllare che non manchi la directive auto che poi se no son casini
+
+- controllare vlan sugli switch e sui dispositivi
+  - controllare che le porte untagged non abbiano interfacce tagged, e viceversa
+  - controllare che su tutti gli switch ci siano le vlan per sicurezza
+
+- se c'è iptables di mezzo, controllare bene di aver usato la interfaccia corretta e, nel caso, magari rifare da zero la config tanto c'è poca roba :)
+
+- controllare di avere messo ip_forward su tutti gli host che devono farlo
+
+- controllare 
