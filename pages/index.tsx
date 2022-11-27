@@ -30,7 +30,7 @@ const Index = () => {
     <div className="centraldiv pb-5">
       <div className="position-relative w-100 my-auto">
         <div className="position-relative mx-auto" style={{ width: "fit-content" }}>
-          <h1 className="centralh1 fst-italic px-5 py-5">Marte Montipo'</h1>
+          <h1 className="centralh1 fst-italic px-md-5 px-1 py-5">Marte Montipo'</h1>
           <span className="h1kanji fs-1">火星</span>
         </div>
 
