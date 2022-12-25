@@ -6,8 +6,24 @@
   --link-color-rgb: 60, 60, 76;
   --link-clicked-color: #1f1f1f;
   --border-color: #d3d3d3;
+  --shadow-color: #d3d3d366;
   --kanji-color: #dedede;
   --text-font: 'Source Sans Pro', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-bg-color: #333;
+    --main-text-color-rgb: 255, 255, 255;
+    --main-text-color: rgb(var(--link-color-rgb));
+    --link-color: #ccc;
+    --link-color-rgb: 204, 204, 204;
+    --link-clicked-color: #666;
+    --border-color: #444;
+    --shadow-color: #4446;
+    --kanji-color: #999;
+    --text-font: 'Source Sans Pro', sans-serif;
+  }
 }
 
 //:root {
@@ -85,7 +101,7 @@ a:disabled {
 }
 
 a:hover {
-  color: var(--link-clicked-color);
+  color: var(--link-color);
   //text-decoration-style: dashed;
   text-decoration-color: rgba(var(--link-color-rgb), 0.75);
   transition: .5s;
@@ -138,7 +154,7 @@ a:hover {
 
 .bordered-box {
   border: 2px dashed var(--border-color);
-  box-shadow: 4px 4px 0 #D3D3D366;
+  box-shadow: 4px 4px 0 var(--shadow-color);
   text-align: start;
   padding: 0.938rem;
   background-color: var(--main-bg-color);
