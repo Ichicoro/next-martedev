@@ -19,7 +19,7 @@ const Index = () => {
 
   return <>
     <Head>
-        <title>Marte Montipo'</title>
+        <title>Marte</title>
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ededed" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#333333" />
         <meta charSet="utf-8" />
@@ -66,7 +66,7 @@ const Index = () => {
                     { url: "https://steffo.eu", name: "Steffo" },
                     { url: "https://gimbaro.dev", name: "Gimbaro" },
                     { url: "https://fermitech.info", name: "Balu" }
-                  ].map(friend => <div>
+                  ].map((friend, i) => <div key={i}>
                     <a target="_blank" className="d-inline-flex align-items-center gap-1 mb-1" href={friend.url}><FaUser />{friend.name}</a>
                   </div>)}
                 </span>
@@ -113,7 +113,7 @@ const Index = () => {
                         A Tetris remake in the <a href="https://godotengine.org">Godot game engine</a>. It is available both as a <a href="https://github.com/Ichicoro/godot-tetris/releases">native binary</a> or as an <a href="https://marte.dev/tetris">HTML5 page</a>.
                       </>
                     }
-                  ].map((project, i, arr) => <div className={i !== arr.length - 1 ? "pb-3" : ""}>
+                  ].map((project, i, arr) => <div className={i !== arr.length - 1 ? "pb-3" : ""} key={i}>
                     <h4 className="mb-3"><span>{project.title}</span></h4>
                     <p className="my-0">{project.contents}</p>
                     <p className="mt-2 mb-0 d-flex gap-3">{project.links.map(link => <span>
@@ -152,7 +152,7 @@ const Index = () => {
                         The official mobile app for <Link href="https://holyart.it">Holyart.it</Link>, written in TypeScript and leveraging <Link href="https://expo.io">Expo</Link>.
                       </>
                     }
-                  ].map((project, i, arr) => <div className={i !== arr.length - 1 ? "pb-3" : ""}>
+                  ].map((project, i, arr) => <div className={i !== arr.length - 1 ? "pb-3" : ""} key={i}>
                     <h4 className="mb-3"><span>{project.title}</span></h4>
                     <p className="my-0">{project.contents}</p>
                     <p className="mt-2 mb-0 d-flex gap-3">{project.links.map(link => <span>
