@@ -116,7 +116,7 @@ const Index = () => {
                   ].map((project, i, arr) => <div className={i !== arr.length - 1 ? "pb-3" : ""} key={i}>
                     <h4 className="mb-3"><span>{project.title}</span></h4>
                     <p className="my-0">{project.contents}</p>
-                    <p className="mt-2 mb-0 d-flex gap-3">{project.links.map(link => <span>
+                    <p className="mt-2 mb-0 d-flex gap-3">{project.links.map((link, i) => <span key={i}>
                       <a className="d-inline-flex align-items-center gap-1" href={link.link}>{link.icon}{link.text}</a>
                     </span>)}</p>
                   </div>)}
@@ -155,7 +155,7 @@ const Index = () => {
                   ].map((project, i, arr) => <div className={i !== arr.length - 1 ? "pb-3" : ""} key={i}>
                     <h4 className="mb-3"><span>{project.title}</span></h4>
                     <p className="my-0">{project.contents}</p>
-                    <p className="mt-2 mb-0 d-flex gap-3">{project.links.map(link => <span>
+                    <p className="mt-2 mb-0 d-flex gap-3">{project.links.map((link, i) => <span key={i}>
                       <a className="d-inline-flex align-items-center gap-1" href={link.link}>{link.icon}{link.text}</a>
                     </span>)}</p>
                   </div>)}
