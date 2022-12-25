@@ -20,7 +20,8 @@ const Index = () => {
   return <>
     <Head>
         <title>Marte Montipo'</title>
-        <meta name="theme-color" content="#ededed" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ededed" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#333333" />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
@@ -36,7 +37,7 @@ const Index = () => {
 
         <div className="px-4">
           <div className="row">
-            <div className="col-12 col-md-3 mb-4 mb-md-0">
+            <div className="col-12 col-md-3 order-2 order-md-1">
               <div>
                 <div className="row py-0">
                   <div className="col-6 col-md-12 mb-md-4">
@@ -49,7 +50,7 @@ const Index = () => {
                         { href: "https://twitter.com/_ichicoro", icon: <FaTwitter />, text: "Twitter" },
                         { href: "https://t.me/Ichicoro", icon: <FaTelegram />, text: "Telegram" },
                         { href: "mailto:me@marte.dev", icon: <FaEnvelope />, text: "Email" }
-                      ].map(link => <div>
+                      ].map((link, i) => <div key={i}>
                         <a target="_blank" className="d-inline-flex align-items-center gap-1 mb-1" href={link.href}>{link.icon}{link.text}</a>
                       </div>)}</span>
                     </div>
@@ -74,7 +75,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <div className="col-12 col-md-9">
+            <div className="col-12 col-md-9 order-1 order-md-2  mb-4 mb-md-0">
               <div className="bordered-box mb-4">
                 <TwemojiSVG><h2 className='projects-box__title d-flex align-items-center gap-2'>About me <span aria-hidden>✨</span></h2></TwemojiSVG>
                 <span className="my-0">
@@ -95,7 +96,7 @@ const Index = () => {
                       title: "PrivacyLayer",
                       links: [{ link: "https://github.com/Ichicoro/privacylayer", text: "GitHub", icon: <FaGithub /> }],
                       contents: <>
-                        PrivacyLayer is an app for Android 4.4+ devices that lets users <b>encrypt</b> and <b>decrypt</b> text using a <i>customizable key</i>.
+                        PrivacyLayer is an app for Android 4.4+ devices that lets users <span className="fw-bold">encrypt</span> and <span className="fw-bold">decrypt</span> text using a <span className="fst-italic">customizable key</span>.
                       </>
                     },
                     {

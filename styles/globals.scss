@@ -1,9 +1,10 @@
 :root {
   --main-bg-color: #ededed; // #E5EBEA;
   --main-text-color-rgb: 71, 70, 70; // 31, 31, 31;
-  --main-text-color: rgb(var(--link-color-rgb)); // #1f1f1f;
+  --main-text-color: rgb(var(--link-color-rgb));
   --link-color: #3c3c4c;
   --link-color-rgb: 60, 60, 76;
+  --link-underline-color: rgba(var(--link-color-rgb), 0.25);
   --link-clicked-color: #1f1f1f;
   --border-color: #d3d3d3;
   --shadow-color: #d3d3d366;
@@ -18,34 +19,17 @@
     --main-text-color: rgb(var(--link-color-rgb));
     --link-color: #ccc;
     --link-color-rgb: 204, 204, 204;
-    --link-clicked-color: #666;
+    --link-underline-color: rgba(var(--link-color-rgb), 0.15);
+    --link-clicked-color: #888;
     --border-color: #444;
     --shadow-color: #4446;
-    --kanji-color: #999;
+    --kanji-color: #444;
     --text-font: 'Source Sans Pro', sans-serif;
   }
 }
 
-//:root {
-//  --main-bg-color: #FEEAFA;
-//  --main-text-color: #494448;
-//  --link-color: #242423;
-//  --link-clicked-color: #242423;
-//  --border-color: #242423;
-//}
-
 @import "~bootstrap/scss/bootstrap-grid";
 @import "~bootstrap/scss/bootstrap-utilities";
-
-/*66 25 34*/
-
-/* :root {
-    --main-bg-color: #18191d;
-    --main-text-color: #D63D42;
-    --link-color: #E26840;
-    --link-clicked-color: #88202D;
-    --border-color: #4F2B2F;
-} */
 
 body {
   margin: 0;
@@ -91,7 +75,7 @@ a:visited,
 a:hover {
   text-decoration: underline;
   text-decoration-style: solid;
-  text-decoration-color: rgba(var(--link-color-rgb), 0.25);
+  text-decoration-color: var(--link-underline-color);
   transition: .5s;
   color: var(--link-color);
 }
@@ -103,7 +87,7 @@ a:disabled {
 a:hover {
   color: var(--link-color);
   //text-decoration-style: dashed;
-  text-decoration-color: rgba(var(--link-color-rgb), 0.75);
+  text-decoration-color: var(--link-clicked-color);
   transition: .5s;
 }
 
@@ -138,7 +122,7 @@ a:hover {
   margin-top: 0;
   text-indent: 1.75rem;
   font-weight: 600;
-  transition: 1s;
+  //transition: 1s;
 }
 
 .projects-grid-span {
