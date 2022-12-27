@@ -70,13 +70,14 @@ a {
   color: var(--link-color);
 }
 
-a,
-a:visited,
-a:hover {
+a, a:visited {
   text-decoration: underline;
   text-decoration-style: solid;
   text-decoration-color: var(--link-underline-color);
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
   transition: .5s;
+  animation-fill-mode: forwards;
   color: var(--link-color);
 }
 
@@ -85,9 +86,7 @@ a:disabled {
 }
 
 a:hover {
-  color: var(--link-color);
-  //text-decoration-style: dashed;
-  text-decoration-color: var(--link-clicked-color);
+  text-decoration-color: var(--link-color);
   transition: .5s;
 }
 
